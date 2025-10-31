@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Bash(poetry show:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
