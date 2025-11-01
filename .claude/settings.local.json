@@ -3,7 +3,10 @@
     "allow": [
       "Bash(mkdir:*)",
       "Bash(cat:*)",
-      "Bash(poetry show:*)"
+      "Bash(poetry show:*)",
+      "Bash(poetry run pytest:*)",
+      "Bash(poetry run ruff:*)",
+      "Bash(poetry run black:*)"
     ],
     "deny": [],
     "ask": []
