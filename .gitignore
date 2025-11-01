@@ -69,3 +69,6 @@ chroma_db/
 
 # Anki packages (generated output)
 output/*.apkg
+
+# Claude
+.claude/
