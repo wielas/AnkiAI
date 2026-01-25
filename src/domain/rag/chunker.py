@@ -12,7 +12,7 @@ from src.domain.models.document import Document
 
 logger = logging.getLogger(__name__)
 
-# Default encoding for OpenAI text-embedding-3-large
+# Default encoding for OpenAI text-embedding-3-small
 DEFAULT_ENCODING = "cl100k_base"
 
 

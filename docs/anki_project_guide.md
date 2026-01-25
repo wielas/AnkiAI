@@ -241,7 +241,7 @@ See "Core Data Models" document for complete class definitions.
 | **Dependency Mgmt** | Poetry | Modern, handles complex deps |
 | **PDF Parser** | PyMuPDF | Fast, reliable |
 | **Vector Store** | Chroma | Simple, local, learning-friendly |
-| **Embeddings** | OpenAI text-embedding-3-large | Best quality/cost |
+| **Embeddings** | OpenAI text-embedding-3-small | Best quality/cost |
 | **LLM** | Claude Sonnet 4.5 | Excellent for education |
 | **CLI** | Click | Clean API |
 | **Testing** | pytest + coverage | Standard |

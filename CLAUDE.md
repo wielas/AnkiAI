@@ -222,7 +222,7 @@ from src.domain.models.document import Document, DocumentMetadata
 The RAG (Retrieval-Augmented Generation) pipeline is the core learning focus:
 
 1. **Semantic Chunking** - Split documents into ~800 token chunks with overlap
-2. **Embedding Generation** - Create vectors using OpenAI text-embedding-3-large
+2. **Embedding Generation** - Create vectors using OpenAI text-embedding-3-small
 3. **Vector Storage** - Store in ChromaDB for similarity search
 4. **Context Retrieval** - Find relevant chunks for flashcard generation
 5. **Flashcard Generation** - Use Claude Sonnet 4.5 with retrieved context

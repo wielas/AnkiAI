@@ -230,7 +230,7 @@ Examples:
 
 "Create [Action] 
 the EmbeddingGenerator class [Specific Component]
-that uses OpenAI's text-embedding-3-large model, handles batching, 
+that uses OpenAI's text-embedding-3-small model, handles batching, 
 and includes error handling [Requirements]
 as designed in the RAG architecture document [Context]"
 
