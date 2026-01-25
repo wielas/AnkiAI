@@ -1,0 +1,1 @@
+cp flashcards.apkg /mnt/c/Users/goonwagon/Desktop/Flashcards/

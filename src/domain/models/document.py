@@ -14,6 +14,14 @@ class DocumentFormat(Enum):
     EPUB = "epub"
 
 
+class ProcessingStatus(Enum):
+    """Status of flashcard generation processing."""
+
+    SUCCESS = "success"  # All pages processed successfully
+    PARTIAL = "partial"  # Some pages failed, but we have results
+    FAILED = "failed"  # No flashcards generated
+
+
 @dataclass
 class DocumentMetadata:
     """Metadata about the source document.
@@ -86,3 +94,77 @@ class Document:
             Number of characters in the document content
         """
         return len(self.content)
+
+
+@dataclass
+class FlashcardResult:
+    """Result from generating flashcard(s) for a single page.
+
+    Attributes:
+        flashcards: List of flashcard dicts, each with "question" and "answer" keys
+        page_number: Page number this result is for (1-indexed)
+        success: Whether generation was successful
+        error_message: Error message if generation failed
+        tokens_used: Total tokens used for this generation
+        cost_usd: Estimated cost in USD for this generation
+    """
+
+    flashcards: List[Dict[str, str]]  # [{"question": "...", "answer": "..."}]
+    page_number: int
+    success: bool
+    error_message: Optional[str] = None
+    tokens_used: Optional[int] = None
+    cost_usd: Optional[float] = None
+
+
+@dataclass
+class GenerationResult:
+    """Result from full flashcard generation process.
+
+    Attributes:
+        flashcards: All successfully generated flashcards
+        results: Detailed results for each page attempt
+        total_attempted: Number of pages attempted
+        total_success: Number of pages successfully processed
+        total_failed: Number of pages that failed
+        total_tokens: Total tokens used across all generations
+        total_cost_usd: Total estimated cost in USD
+        status: Overall processing status
+        output_path: Path to the generated .apkg file (if created)
+    """
+
+    flashcards: List[Dict[str, str]]  # All successful flashcards
+    results: List[FlashcardResult]  # Details for each page
+
+    # Summary statistics
+    total_attempted: int
+    total_success: int
+    total_failed: int
+
+    # Cost tracking
+    total_tokens: int
+    total_cost_usd: float
+
+    # Status
+    status: ProcessingStatus
+
+    # Output
+    output_path: Optional[str] = None
+
+    def get_success_rate(self) -> float:
+        """Calculate percentage of successful generations.
+
+        Returns:
+            Success rate as a percentage (0.0 to 100.0)
+        """
+        if self.total_attempted == 0:
+            return 0.0
+        return (self.total_success / self.total_attempted) * 100
+
+    def get_failed_pages(self) -> List[int]:
+        """Get list of page numbers that failed.
+
+        Returns:
+            List of 1-indexed page numbers that failed to generate
+        """
+        return [r.page_number for r in self.results if not r.success]

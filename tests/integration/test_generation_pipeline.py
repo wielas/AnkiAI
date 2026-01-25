@@ -232,3 +232,149 @@ class TestGenerationPipeline:
         stats_after_reset = client.get_usage_stats()
         assert stats_after_reset["api_calls"] == 0
         assert stats_after_reset["total_tokens"] == 0
+
+
+@pytest.mark.integration
+@pytest.mark.api
+class TestFullPipelineIntegration:
+    """Integration tests for the complete end-to-end pipeline including Anki export."""
+
+    def test_full_pipeline_pdf_to_anki(self, sample_pdf_path, tmp_path):
+        """Test complete pipeline: PDF → Claude → Anki .apkg file."""
+        # Skip if no API key configured
+        if not os.getenv("ANTHROPIC_API_KEY"):
+            pytest.skip("ANTHROPIC_API_KEY not set - skipping API test")
+
+        from src.application.flashcard_service import FlashcardGeneratorService
+        from src.domain.models.document import ProcessingStatus
+
+        # Setup output path
+        output_path = tmp_path / "test_output.apkg"
+
+        # Create service and generate flashcards (2-3 pages for real test)
+        service = FlashcardGeneratorService()
+
+        progress_log = []
+
+        def log_progress(current, total, message):
+            progress_log.append((current, total, message))
+            print(f"[{current}/{total}] {message}")
+
+        result = service.generate_flashcards(
+            pdf_path=sample_pdf_path,
+            page_range=(1, 3),
+            cards_per_page=1,
+            difficulty="intermediate",
+            output_path=str(output_path),
+            on_progress=log_progress,
+        )
+
+        # Verify result structure
+        assert result is not None
+        assert result.status in [ProcessingStatus.SUCCESS, ProcessingStatus.PARTIAL]
+        assert result.total_attempted == 3
+
+        # At least some pages should succeed
+        assert result.total_success >= 1
+        assert len(result.flashcards) >= 1
+
+        # Verify flashcard structure
+        for card in result.flashcards:
+            assert "question" in card
+            assert "answer" in card
+            assert card["question"].strip()
+            assert card["answer"].strip()
+
+        # Verify .apkg file was created
+        assert result.output_path is not None
+        assert os.path.exists(result.output_path)
+        assert result.output_path.endswith(".apkg")
+
+        # Verify token and cost tracking
+        assert result.total_tokens > 0
+        assert result.total_cost_usd > 0
+
+        # Verify progress was tracked
+        assert len(progress_log) == 3
+
+        # Print results for inspection
+        print("\n" + "=" * 50)
+        print("=== Full Pipeline Test Results ===")
+        print("=" * 50)
+        print(f"Status: {result.status.value}")
+        print(f"Pages processed: {result.total_success}/{result.total_attempted}")
+        print(f"Flashcards generated: {len(result.flashcards)}")
+        print(f"Tokens used: {result.total_tokens:,}")
+        print(f"Cost: ${result.total_cost_usd:.4f}")
+        print(f"Output file: {result.output_path}")
+
+        print("\n=== Generated Flashcards ===")
+        for i, card in enumerate(result.flashcards, 1):
+            print(f"\n[Card {i}] (Page {card.get('source_page', '?')})")
+            print(f"Q: {card['question']}")
+            print(f"A: {card['answer']}")
+
+        if result.total_failed > 0:
+            print(f"\n=== Failed Pages: {result.get_failed_pages()} ===")
+            for r in result.results:
+                if not r.success:
+                    print(f"Page {r.page_number}: {r.error_message}")
+
+    def test_full_pipeline_single_page(self, sample_pdf_path, tmp_path):
+        """Test pipeline with a single page for faster testing."""
+        # Skip if no API key configured
+        if not os.getenv("ANTHROPIC_API_KEY"):
+            pytest.skip("ANTHROPIC_API_KEY not set - skipping API test")
+
+        from src.application.flashcard_service import FlashcardGeneratorService
+        from src.domain.models.document import ProcessingStatus
+
+        output_path = tmp_path / "single_page.apkg"
+
+        service = FlashcardGeneratorService()
+        result = service.generate_flashcards(
+            pdf_path=sample_pdf_path,
+            page_range=(1, 1),
+            cards_per_page=1,
+            difficulty="beginner",
+            output_path=str(output_path),
+        )
+
+        assert result.status == ProcessingStatus.SUCCESS
+        assert result.total_success == 1
+        assert len(result.flashcards) == 1
+        assert os.path.exists(result.output_path)
+
+        print("\n=== Single Page Test ===")
+        print(f"Q: {result.flashcards[0]['question']}")
+        print(f"A: {result.flashcards[0]['answer']}")
+        print(f"Cost: ${result.total_cost_usd:.4f}")
+
+    def test_full_pipeline_multiple_cards_per_page(self, sample_pdf_path, tmp_path):
+        """Test generating multiple flashcards per page."""
+        # Skip if no API key configured
+        if not os.getenv("ANTHROPIC_API_KEY"):
+            pytest.skip("ANTHROPIC_API_KEY not set - skipping API test")
+
+        from src.application.flashcard_service import FlashcardGeneratorService
+
+        output_path = tmp_path / "multi_cards.apkg"
+
+        service = FlashcardGeneratorService()
+        result = service.generate_flashcards(
+            pdf_path=sample_pdf_path,
+            page_range=(1, 2),
+            cards_per_page=2,
+            difficulty="intermediate",
+            output_path=str(output_path),
+        )
+
+        # Should get up to 4 flashcards (2 pages * 2 cards)
+        assert len(result.flashcards) >= 2  # At least some multi-card generation
+        assert os.path.exists(result.output_path)
+
+        print("\n=== Multi-Card Per Page Test ===")
+        print(f"Generated {len(result.flashcards)} flashcards from 2 pages")
+        for i, card in enumerate(result.flashcards, 1):
+            print(f"\n[{i}] Q: {card['question'][:80]}...")
+        print(f"Cost: ${result.total_cost_usd:.4f}")
