@@ -2,19 +2,81 @@
 
 AI-powered PDF to Anki flashcard generator with intelligent context extraction and semantic understanding.
 
+> **Development Status:** Week 2 of 4 — RAG pipeline complete, quality optimization next.
+
 ## Description
 
-AnkiAI transforms PDF documents into high-quality Anki flashcards using advanced AI models (Claude and GPT-4). The system intelligently extracts document structure, builds semantic context through RAG, and generates contextually-aware flashcards with proper formatting.
+AnkiAI transforms PDF documents into high-quality Anki flashcards using advanced AI models (Claude and GPT-4). The system intelligently extracts document structure, builds semantic context through RAG (Retrieval-Augmented Generation), and generates contextually-aware flashcards with proper formatting.
+
+**Primary Learning Goals:**
+1. Master RAG & Embeddings architecture
+2. System design with modular architecture
+3. Prompt engineering for quality generation
 
 ## Features
 
-- PDF document processing with structure preservation
-- Semantic chunking and context extraction
-- RAG-based context retrieval for intelligent flashcard generation
-- Multi-model support (Anthropic Claude, OpenAI GPT-4)
-- ChromaDB vector storage for efficient similarity search
-- Automatic Anki deck generation (.apkg format)
-- CLI interface for easy interaction
+### Document Processing
+- PDF parsing with PyMuPDF (structure preservation, metadata extraction)
+- Semantic chunking (~800 tokens with configurable overlap)
+- Page range support for partial document processing
+
+### RAG Pipeline
+- **Embeddings**: OpenAI `text-embedding-3-small` (1536 dimensions)
+- **Vector Storage**: ChromaDB with persistence and source filtering
+- **Retrieval**: Configurable top-k with minimum score thresholds
+- **Context Building**: Token-aware assembly with metadata formatting
+
+### Flashcard Generation
+- Claude Sonnet 4 for high-quality Q&A generation
+- Structured output with front/back/tags
+- Anki deck export (.apkg format)
+
+### Interface
+- CLI for batch processing
+- Cost tracking and usage statistics
+
+## RAG Pipeline Components
+
+The RAG pipeline is the core of AnkiAI's intelligent flashcard generation:
+
+```
+PDF → Chunker → EmbeddingGenerator → VectorStore → Retriever → ContextBuilder → LLM
+```
+
+### Quick Example
+
+```python
+from src.domain.rag import (
+    Chunker, EmbeddingGenerator, VectorStore,
+    Retriever, ContextBuilder, ChunkOrdering
+)
+from src.domain.document_processing.pdf_parser import PDFParser
+
+# 1. Parse and chunk document
+doc = PDFParser.parse("textbook.pdf", start_page=1, end_page=20)
+chunks = Chunker.chunk(doc, target_size=800, overlap_size=100)
+
+# 2. Generate embeddings and index
+generator = EmbeddingGenerator()
+generator.generate_embeddings(chunks)
+store = VectorStore(collection_name="textbook")
+store.add_chunks(chunks)
+
+# 3. Retrieve relevant context
+retriever = Retriever(store, generator)
+relevant_chunks = retriever.retrieve(
+    "What is ACID in databases?",
+    top_k=5,
+    min_score=0.5  # Filter low-relevance results
+)
+
+# 4. Build LLM-ready context
+context = ContextBuilder.build_context(
+    relevant_chunks,
+    include_metadata=True,  # Adds [Source: file.pdf, Pages: 1-3]
+    ordering=ChunkOrdering.POSITION  # Or RELEVANCE
+)
+```
 
 ## Architecture
 
@@ -92,22 +154,44 @@ poetry run ruff check src tests
 ```
 AnkiAI/
 ├── src/
-│   ├── interface/          # CLI and user interactions
-│   ├── application/        # Use cases and orchestration
-│   ├── domain/            # Core business logic
-│   │   ├── models/        # Domain models
-│   │   ├── document_processing/  # PDF processing
-│   │   ├── rag/           # Context retrieval
-│   │   ├── generation/    # Flashcard generation
-│   │   └── output/        # Anki deck creation
-│   └── infrastructure/    # External integrations
+│   ├── interface/              # CLI and user interactions
+│   ├── application/            # Use cases and orchestration
+│   ├── domain/                 # Core business logic
+│   │   ├── models/             # Document, Chunk, Flashcard
+│   │   ├── document_processing/  # PDFParser
+│   │   ├── rag/                # RAG pipeline
+│   │   │   ├── chunker.py      # Semantic chunking
+│   │   │   ├── embeddings.py   # OpenAI embeddings
+│   │   │   ├── vector_store.py # ChromaDB storage
+│   │   │   ├── retriever.py    # Query orchestration
+│   │   │   └── context_builder.py  # Context formatting
+│   │   ├── generation/         # ClaudeClient, PromptBuilder
+│   │   └── output/             # AnkiFormatter
+│   └── infrastructure/         # Config, logging
 ├── tests/
-│   ├── unit/             # Unit tests
-│   ├── integration/      # Integration tests
-│   ├── e2e/             # End-to-end tests
-│   └── fixtures/        # Test fixtures
-└── docs/                # Documentation
+│   ├── unit/                   # 90%+ coverage target
+│   ├── integration/            # API integration tests
+│   ├── e2e/                    # Full workflow tests
+│   └── fixtures/               # Sample PDFs
+└── docs/                       # Project documentation
 ```
+
+## Cost Estimates
+
+For a typical 20-page technical document:
+
+| Component | Model | Cost |
+|-----------|-------|------|
+| Embeddings | text-embedding-3-small | ~$0.01 |
+| Generation | Claude Sonnet 4 | ~$0.12 |
+| **Total** | | **~$0.13-0.15** |
+
+## Development Roadmap
+
+- [x] **Week 1**: Simple pipeline (PDF → LLM → Flashcards)
+- [x] **Week 2**: RAG pipeline (chunking, embeddings, retrieval)
+- [ ] **Week 3**: Quality optimization (prompt engineering, deduplication)
+- [ ] **Week 4**: Web interface and deployment
 
 ## License
 

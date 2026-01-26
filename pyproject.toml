@@ -57,6 +57,9 @@ markers = [
     "e2e: End-to-end tests",
     "api: Tests that make real API calls",
 ]
+filterwarnings = [
+    "ignore:builtin type Swig.*:DeprecationWarning",
+]
 
 [tool.coverage.run]
 source = ["src"]
