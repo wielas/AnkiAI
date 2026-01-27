@@ -41,7 +41,7 @@ export function ConfigForm({ config, setConfig, disabled }) {
                     Difficulty Level
                 </label>
                 <div className="flex gap-2">
-                    {['easy', 'medium', 'hard'].map((level) => (
+                    {['beginner', 'intermediate', 'advanced'].map((level) => (
                         <button
                             key={level}
                             type="button"

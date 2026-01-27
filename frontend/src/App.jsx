@@ -13,7 +13,7 @@ function App() {
     const [config, setConfig] = useState({
         startPage: 1,
         endPage: 1,
-        difficulty: 'medium',
+        difficulty: 'intermediate',
         cardsPerPage: 1
     })
 
