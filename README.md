@@ -2,11 +2,11 @@
 
 AI-powered PDF to Anki flashcard generator with intelligent context extraction and semantic understanding.
 
-> **Development Status:** Week 2 of 4 — RAG pipeline complete, quality optimization next.
+> **Development Status:** RAG pipeline complete, quality optimization in progress.
 
 ## Description
 
-AnkiAI transforms PDF documents into high-quality Anki flashcards using advanced AI models (Claude and GPT-4). The system intelligently extracts document structure, builds semantic context through RAG (Retrieval-Augmented Generation), and generates contextually-aware flashcards with proper formatting.
+AnkiAI transforms PDF documents into high-quality Anki flashcards using Claude AI. The system parses PDF pages and generates contextually-aware flashcards with proper formatting. A RAG (Retrieval-Augmented Generation) pipeline was implemented and evaluated but baseline page-to-flashcard generation is used for production.
 
 **Primary Learning Goals:**
 1. Master RAG & Embeddings architecture
@@ -35,9 +35,9 @@ AnkiAI transforms PDF documents into high-quality Anki flashcards using advanced
 - CLI for batch processing
 - Cost tracking and usage statistics
 
-## RAG Pipeline Components
+## RAG Pipeline Components (Experimental)
 
-The RAG pipeline is the core of AnkiAI's intelligent flashcard generation:
+A complete RAG pipeline was built for learning purposes and experimental evaluation. Baseline generation is used in production, but the RAG components remain available:
 
 ```
 PDF → Chunker → EmbeddingGenerator → VectorStore → Retriever → ContextBuilder → LLM
@@ -188,10 +188,10 @@ For a typical 20-page technical document:
 
 ## Development Roadmap
 
-- [x] **Week 1**: Simple pipeline (PDF → LLM → Flashcards)
-- [x] **Week 2**: RAG pipeline (chunking, embeddings, retrieval)
-- [ ] **Week 3**: Quality optimization (prompt engineering, deduplication)
-- [ ] **Week 4**: Web interface and deployment
+- [x] Baseline pipeline (PDF → LLM → Flashcards)
+- [x] RAG pipeline (chunking, embeddings, retrieval) — *experimental*
+- [ ] Quality optimization (prompt engineering, deduplication)
+- [ ] Web interface and deployment
 
 ## License
 

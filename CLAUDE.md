@@ -217,37 +217,77 @@ import fitz  # PyMuPDF
 from src.domain.models.document import Document, DocumentMetadata
 ```
 
-## RAG Pipeline (Week 2 Focus)
+## RAG Implementation
 
-The RAG (Retrieval-Augmented Generation) pipeline is the core learning focus:
+### Overview
 
-1. **Semantic Chunking** - Split documents into ~800 token chunks with overlap
-2. **Embedding Generation** - Create vectors using OpenAI text-embedding-3-small
-3. **Vector Storage** - Store in ChromaDB for similarity search
-4. **Context Retrieval** - Find relevant chunks for flashcard generation
-5. **Flashcard Generation** - Use Claude Sonnet 4.5 with retrieved context
+A complete RAG (Retrieval-Augmented Generation) pipeline was implemented to explore retrieval-augmented generation as an alternative to direct page-based flashcard generation.
 
-**Cost target**: ~$0.13-0.15 per 20-page document
+### Architecture
+
+```
+PDF → Chunker → EmbeddingGenerator → VectorStore → Retriever → ContextBuilder → LLM
+```
+
+### Components Built
+
+- **Chunker** (`src/domain/rag/chunker.py`): Semantic chunking with 800 token target, 100 token overlap
+- **EmbeddingGenerator** (`src/domain/rag/embeddings.py`): OpenAI text-embedding-3-small integration with batch processing
+- **VectorStore** (`src/domain/rag/vector_store.py`): ChromaDB persistence with similarity search
+- **Retriever** (`src/domain/rag/retriever.py`): High-level retrieval API with configurable top_k
+- **ContextBuilder** (`src/domain/rag/context_builder.py`): Format retrieved chunks for LLM consumption
+
+### Experimental Evaluation
+
+Tested configurations: baseline vs. RAG with k={1,3,5,10}
+
+**Key findings:**
+- **Semantic similarity trap**: Same or highly similar chunks retrieved repeatedly across different queries
+- **Duplicate flashcards**: Similar concepts generated identical or near-identical flashcard content
+- **No clear quality improvement**: RAG-generated flashcards did not demonstrate measurable quality gains over baseline
+- **Added complexity**: Additional pipeline stages increased processing time and cost without corresponding benefits
+
+### Production Decision
+
+The baseline (non-RAG) approach is used for production flashcard generation. RAG components are preserved in the codebase for future experimentation.
+
+**Rationale:** Testing revealed that RAG did not provide clear quality improvements over baseline generation, while adding significant complexity. Key issues included semantic similarity causing duplicate retrievals and repeated flashcard concepts.
+
+### Technical Specifications
+
+| Specification | Value |
+|--------------|-------|
+| Embedding model | text-embedding-3-small |
+| Embedding dimensions | 1536 |
+| Embedding cost | ~$0.003 per 200-page document |
+| Vector database | ChromaDB with persistent storage |
+| Distance metric | L2 (converted to 0-1 similarity scores) |
+| Chunk target size | 800 tokens |
+| Chunk overlap | 100 tokens |
+
+### Cost Target
+
+~$0.13-0.15 per 20-page document (using baseline generation)
 
 ## Important Project Context
 
 ### Quality Metrics
-- **Flashcard acceptance rate**: Target 80%+ (start at ~50-60%)
+- **Flashcard acceptance rate**: Target 80%+
 - **Test coverage**: 80%+
 - **Processing speed**: < 5 minutes for 20 pages
 - **Duplicate rate**: < 5%
 
-### Development Phases
-- **Week 1**: Simple pipeline without RAG (baseline)
-- **Week 2**: RAG deep dive (primary learning focus)
-- **Week 3**: Quality optimization and testing
-- **Week 4**: Web interface and deployment
+### Development Status
+- **Baseline pipeline**: Complete (PDF → LLM → Flashcards)
+- **RAG pipeline**: Complete (experimental, not used in production)
+- **Quality optimization**: In progress (prompt engineering, deduplication)
+- **Web interface**: Planned
 
 ### Iterative Prompt Engineering
 Prompts are versioned and improved based on quality analysis:
-- v1.0: Basic template (Week 1) - expect 50-60% quality
-- v2.0: Few-shot examples (Week 2) - target 70-80% quality
-- v3.0: Optimized based on failures (Week 3) - target 80%+ quality
+- v1.0: Basic template
+- v2.0: Few-shot examples with improved structure
+- v3.0: Optimized based on failure analysis
 
 ## Common Patterns
 
@@ -293,7 +333,7 @@ See `docs/` for detailed guides:
 ## Key Reminders
 
 1. **Pages are 1-indexed** - First page is 1, not 0 (affects page_range tuples)
-2. **RAG is the learning focus** - Take time to understand deeply, not just implement
+2. **Baseline mode for production** - Use direct page-to-flashcard generation (RAG available for experimentation)
 3. **Test-driven development** - Write tests alongside code
 4. **Stateless by default** - Prefer static methods and pure functions
 5. **Document as you go** - Docstrings for all public APIs

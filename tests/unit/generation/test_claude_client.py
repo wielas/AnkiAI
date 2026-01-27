@@ -27,7 +27,7 @@ class TestClaudeClient:
         with patch("src.domain.generation.claude_client.get_settings") as mock:
             settings = Mock()
             settings.anthropic_api_key = "test-api-key"
-            settings.claude_model = "claude-sonnet-4-20250514"
+            settings.claude_model = "claude-sonnet-4-5-20250929"
             settings.claude_temperature = 0.7
             settings.claude_max_tokens = 1024
             mock.return_value = settings
@@ -42,7 +42,7 @@ class TestClaudeClient:
     def test_initialization(self, client):
         """Test client initialization."""
         assert client.api_key == "test-api-key"
-        assert client.model == "claude-sonnet-4-20250514"
+        assert client.model == "claude-sonnet-4-5-20250929"
         assert client.temperature == 0.7
         assert client.max_tokens == 1024
         assert client.total_input_tokens == 0

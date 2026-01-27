@@ -218,7 +218,7 @@ if logger.isEnabledFor(logging.DEBUG):
 ```python
 class ClaudeClient:
     MODELS_PRIORITY = [
-        "claude-sonnet-4-20250514",
+        "claude-sonnet-4-5-20250929",
         "claude-3-5-sonnet-20241022",  # Fallback
         "claude-3-opus-20240229",       # Second fallback
     ]
