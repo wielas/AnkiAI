@@ -49,7 +49,6 @@ coverage.xml
 # Environment variables
 .env
 .env.local
-tests/sample_data/*
 
 
 # ChromaDB
@@ -74,3 +73,9 @@ output/*.apkg
 
 # Claude
 .claude/
+
+# Test data
+flashcards.apkg
+tests/sample_data/*
+outputs/*
+uploads/*

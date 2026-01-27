@@ -183,14 +183,14 @@ For a typical 20-page technical document:
 | Component | Model | Cost |
 |-----------|-------|------|
 | Embeddings | text-embedding-3-small | ~$0.01 |
-| Generation | Claude Sonnet 4 | ~$0.12 |
+| Generation | Claude Sonnet 4.5 | ~$0.12 |
 | **Total** | | **~$0.13-0.15** |
 
 ## Development Roadmap
 
 - [x] Baseline pipeline (PDF → LLM → Flashcards)
 - [x] RAG pipeline (chunking, embeddings, retrieval) — *experimental*
-- [ ] Quality optimization (prompt engineering, deduplication)
+- [~] Quality optimization (prompt engineering, deduplication)
 - [ ] Web interface and deployment
 
 ## License
