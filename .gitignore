@@ -49,6 +49,8 @@ coverage.xml
 # Environment variables
 .env
 .env.local
+tests/sample_data/*
+
 
 # ChromaDB
 chroma_db/
