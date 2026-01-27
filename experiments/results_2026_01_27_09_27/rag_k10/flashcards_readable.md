@@ -1,0 +1,83 @@
+# Flashcards - rag_k10
+
+**Configuration:** RAG with top_k=10 (ten most relevant chunks)
+
+**Generated:** 2026-01-27T09:28:48.304914
+
+---
+
+## Card 1 (Page 205)
+
+**Question:**
+Why is it impractical to configure all followers as synchronous in leader-based replication, and what approach is typically used instead?
+
+**Answer:**
+If all followers are synchronous, any single node failure would block all writes and halt the entire system since the leader must wait for confirmation from all replicas. Instead, databases typically use semi-synchronous replication where only one follower is synchronous while others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (leader and one synchronous follower) without complete system blocking.
+
+**RAG Metadata:**
+- Chunks retrieved: 3
+- Top scores: [0.6139901136311736, 0.5569632221107669, 0.5074560322851246]
+- Context tokens: 2076
+
+---
+
+## Card 2 (Page 206)
+
+**Question:**
+Why is it impractical to configure all followers as synchronous in leader-based replication, and what is the common alternative approach?
+
+**Answer:**
+If all followers were synchronous, any single node outage would halt the entire system since the leader must wait for confirmation from all followers before processing writes. The common alternative is semi-synchronous replication, where one follower is synchronous and others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (leader and one synchronous follower) while maintaining system availability.
+
+**RAG Metadata:**
+- Chunks retrieved: 3
+- Top scores: [0.5617134016891496, 0.5278219659955776, 0.5068093032883093]
+- Context tokens: 2076
+
+---
+
+## Card 3 (Page 207)
+
+**Question:**
+Why is it impractical to configure all followers as synchronous in leader-based replication, and what is the typical compromise solution?
+
+**Answer:**
+If all followers were synchronous, any single node outage would halt the entire system since the leader must wait for all confirmations. The typical compromise is semi-synchronous replication, where one follower is synchronous and others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (leader and one synchronous follower) while maintaining system availability.
+
+**RAG Metadata:**
+- Chunks retrieved: 3
+- Top scores: [0.6262869757279872, 0.5761893544643316, 0.5690976653252887]
+- Context tokens: 2076
+
+---
+
+## Card 4 (Page 208)
+
+**Question:**
+Why is it impractical for all followers to be synchronous in leader-based replication, and what is the common compromise?
+
+**Answer:**
+If all followers were synchronous, any single node outage would halt the entire system since the leader must wait for all followers to confirm writes. The common compromise is semi-synchronous replication, where one follower is synchronous and others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (leader and one synchronous follower).
+
+**RAG Metadata:**
+- Chunks retrieved: 3
+- Top scores: [0.6600500942340486, 0.6104682624631148, 0.5316247201773525]
+- Context tokens: 2076
+
+---
+
+## Card 5 (Page 209)
+
+**Question:**
+Why is it impractical to configure all followers as synchronous in leader-based replication, and what is the common compromise solution?
+
+**Answer:**
+If all followers were synchronous, any single node outage would halt the entire system since the leader must wait for all followers to confirm writes. The common compromise is semi-synchronous replication, where one follower is synchronous (guaranteeing an up-to-date copy on at least two nodes) while others are asynchronous. If the synchronous follower becomes unavailable, one asynchronous follower is promoted to synchronous.
+
+**RAG Metadata:**
+- Chunks retrieved: 3
+- Top scores: [0.635116817477681, 0.563449974182119, 0.5086993071536113]
+- Context tokens: 2076
+
+---
+

@@ -1,0 +1,74 @@
+{
+  "experiment_params": {
+    "pdf_path": "tests/sample_data/DDIA.pdf",
+    "page_range": [
+      205,
+      209
+    ],
+    "cards_per_page": 1,
+    "difficulty": "intermediate",
+    "run_date": "2026-01-27T09:28:48.305285"
+  },
+  "results": [
+    {
+      "config_name": "baseline",
+      "num_flashcards": 5,
+      "total_time_seconds": 15.91,
+      "setup_time_seconds": 0.0,
+      "generation_time_seconds": 15.86,
+      "total_tokens": 4841,
+      "total_cost_usd": 0.0205,
+      "success_rate": 100.0,
+      "status": "success",
+      "error": null
+    },
+    {
+      "config_name": "rag_k1",
+      "num_flashcards": 5,
+      "total_time_seconds": 20.37,
+      "setup_time_seconds": 0.0,
+      "generation_time_seconds": 20.34,
+      "total_tokens": 6966,
+      "total_cost_usd": 0.0277,
+      "success_rate": 100.0,
+      "status": "success",
+      "error": null
+    },
+    {
+      "config_name": "rag_k3",
+      "num_flashcards": 5,
+      "total_time_seconds": 20.55,
+      "setup_time_seconds": 0.0,
+      "generation_time_seconds": 20.52,
+      "total_tokens": 14326,
+      "total_cost_usd": 0.0508,
+      "success_rate": 100.0,
+      "status": "success",
+      "error": null
+    },
+    {
+      "config_name": "rag_k5",
+      "num_flashcards": 5,
+      "total_time_seconds": 20.95,
+      "setup_time_seconds": 0.0,
+      "generation_time_seconds": 20.92,
+      "total_tokens": 14334,
+      "total_cost_usd": 0.051,
+      "success_rate": 100.0,
+      "status": "success",
+      "error": null
+    },
+    {
+      "config_name": "rag_k10",
+      "num_flashcards": 5,
+      "total_time_seconds": 21.91,
+      "setup_time_seconds": 0.0,
+      "generation_time_seconds": 21.89,
+      "total_tokens": 14354,
+      "total_cost_usd": 0.0513,
+      "success_rate": 100.0,
+      "status": "success",
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Experiment Summary: rag_k1
+========================================
+
+config_name: rag_k1
+num_flashcards: 7
+total_time_seconds: 29.64
+setup_time_seconds: 0.0
+generation_time_seconds: 29.61
+total_tokens: 9156
+total_cost_usd: 0.0368
+success_rate: 100.0
+status: success
+error: None

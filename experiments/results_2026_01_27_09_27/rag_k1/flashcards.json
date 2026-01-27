@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Why does replication become complex when data changes over time, and what are the three main algorithmic approaches to handle this complexity?",
+    "answer": "Replication is easy for static data but becomes complex when handling changes to replicated data across multiple nodes. The three popular algorithms for replicating changes are single-leader, multi-leader, and leaderless replication, each with different trade-offs in consistency, availability, and performance.",
+    "source_page": 205,
+    "rag_metadata": {
+      "chunks_retrieved": 1,
+      "top_scores": [
+        0.614088750256355
+      ],
+      "context_tokens": 405
+    }
+  },
+  {
+    "question": "In leader-based replication, why are follower replicas typically read-only from the client's perspective?",
+    "answer": "Followers are read-only to ensure all writes are processed through the leader first, which then propagates changes to followers via the replication log. This maintains data consistency by ensuring all writes are applied in the same order across all replicas.",
+    "source_page": 206,
+    "rag_metadata": {
+      "chunks_retrieved": 1,
+      "top_scores": [
+        0.5620517663883368
+      ],
+      "context_tokens": 836
+    }
+  },
+  {
+    "question": "In leader-based replication, why are write operations only accepted by the leader node rather than by any replica?",
+    "answer": "The leader processes all writes first to establish a single, authoritative ordering of operations. It then propagates these changes to followers via a replication log, ensuring all replicas apply writes in the same order and maintain data consistency across the system.",
+    "source_page": 207,
+    "rag_metadata": {
+      "chunks_retrieved": 1,
+      "top_scores": [
+        0.6262702835310096
+      ],
+      "context_tokens": 836
+    }
+  },
+  {
+    "question": "Why is it impractical to configure all followers as synchronous in leader-based replication, and what is the common solution?",
+    "answer": "If all followers were synchronous, any single node outage would halt the entire system since the leader must wait for all followers to confirm writes. The common solution is semi-synchronous replication: one follower is synchronous while others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (the leader and one synchronous follower).",
+    "source_page": 208,
+    "rag_metadata": {
+      "chunks_retrieved": 1,
+      "top_scores": [
+        0.6599284578633808
+      ],
+      "context_tokens": 831
+    }
+  },
+  {
+    "question": "Why is it impractical to configure all followers as synchronous in leader-based replication, and what is the typical compromise solution?",
+    "answer": "If all followers were synchronous, any single node outage would halt the entire system since the leader must wait for all followers to confirm writes. The typical compromise is semi-synchronous replication, where one follower is synchronous and others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (the leader and one synchronous follower) while maintaining system availability.",
+    "source_page": 209,
+    "rag_metadata": {
+      "chunks_retrieved": 1,
+      "top_scores": [
+        0.635116817477681
+      ],
+      "context_tokens": 831
+    }
+  }
+]

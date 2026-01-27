@@ -1,0 +1,13 @@
+Experiment Summary: baseline
+========================================
+
+config_name: baseline
+num_flashcards: 5
+total_time_seconds: 15.91
+setup_time_seconds: 0.0
+generation_time_seconds: 15.86
+total_tokens: 4841
+total_cost_usd: 0.0205
+success_rate: 100.0
+status: success
+error: None

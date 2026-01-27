@@ -1,0 +1,72 @@
+[
+  {
+    "question": "Why is it impractical to configure all followers as synchronous in leader-based replication, and what approach is commonly used instead?",
+    "answer": "If all followers were synchronous, any single node outage would block all writes and halt the entire system since the leader must wait for all followers to confirm. Instead, databases typically use semi-synchronous replication where only one follower is synchronous while others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (leader and one synchronous follower) without risking complete system unavailability.",
+    "source_page": 205,
+    "rag_metadata": {
+      "chunks_retrieved": 3,
+      "top_scores": [
+        0.6140291464833916,
+        0.557036100102916,
+        0.50744703799564
+      ],
+      "context_tokens": 2076
+    }
+  },
+  {
+    "question": "In leader-based replication, why is it impractical to configure all followers as synchronous replicas?",
+    "answer": "If all followers were synchronous, any single node outage would halt the entire system because the leader must wait for confirmation from all followers before processing writes. In practice, databases use semi-synchronous replication with only one synchronous follower, ensuring data durability on at least two nodes while maintaining system availability.",
+    "source_page": 206,
+    "rag_metadata": {
+      "chunks_retrieved": 3,
+      "top_scores": [
+        0.5620517663883368,
+        0.528148567976193,
+        0.5070067693311181
+      ],
+      "context_tokens": 2076
+    }
+  },
+  {
+    "question": "Why is it impractical to configure all followers as synchronous in leader-based replication, and what configuration is commonly used instead?",
+    "answer": "If all followers were synchronous, any single node failure would block all writes and halt the entire system. In practice, databases use semi-synchronous replication where only one follower is synchronous while others are asynchronous, guaranteeing an up-to-date copy exists on at least two nodes (the leader and one synchronous follower) without sacrificing availability.",
+    "source_page": 207,
+    "rag_metadata": {
+      "chunks_retrieved": 3,
+      "top_scores": [
+        0.6262702835310096,
+        0.5761893544643316,
+        0.5691123562651079
+      ],
+      "context_tokens": 2076
+    }
+  },
+  {
+    "question": "Why is it impractical for all followers to be synchronous in leader-based replication, and what is the typical compromise solution?",
+    "answer": "If all followers were synchronous, any single node outage would block all writes and halt the entire system. The typical compromise is semi-synchronous replication, where one follower is synchronous and others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (the leader and one synchronous follower) while maintaining system availability.",
+    "source_page": 208,
+    "rag_metadata": {
+      "chunks_retrieved": 3,
+      "top_scores": [
+        0.6600500942340486,
+        0.6103992546217675,
+        0.5316499900085185
+      ],
+      "context_tokens": 2076
+    }
+  },
+  {
+    "question": "Why is it impractical for all followers to be synchronous in leader-based replication, and what is the common solution?",
+    "answer": "If all followers were synchronous, any single node outage would block all writes and halt the entire system. The common solution is semi-synchronous replication: one follower is synchronous while others are asynchronous, guaranteeing an up-to-date copy on at least two nodes (the leader and one synchronous follower). If the synchronous follower becomes unavailable, an asynchronous one is promoted to synchronous.",
+    "source_page": 209,
+    "rag_metadata": {
+      "chunks_retrieved": 3,
+      "top_scores": [
+        0.6351286708616848,
+        0.5634294434354615,
+        0.508732548457387
+      ],
+      "context_tokens": 2076
+    }
+  }
+]
