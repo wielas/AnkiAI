@@ -1,4 +1,5 @@
 import { Download, CheckCircle2, RotateCcw } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export function ResultsSection({ jobId, onReset }) {
     const handleDownload = async () => {
@@ -21,46 +22,64 @@ export function ResultsSection({ jobId, onReset }) {
     }
 
     return (
-        <div className="py-10 text-center space-y-10 animate-in zoom-in-95 duration-500">
-            <div className="flex flex-col items-center gap-4">
-                <div className="p-4 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full animate-bounce">
-                    <CheckCircle2 size={64} />
-                </div>
-                <div className="space-y-2">
-                    <h2 className="text-3xl font-black text-gray-900 dark:text-white">Deck Ready!</h2>
-                    <p className="text-gray-600 dark:text-gray-400 font-medium">
-                        Your AI-generated flashcards are ready for download.
+        <div className="py-4 text-center space-y-12">
+            <div className="flex flex-col items-center gap-6">
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                        delay: 0.2
+                    }}
+                    className="p-8 bg-lime text-jungle rounded-full shadow-[0_0_40px_rgba(199,239,78,0.3)]"
+                >
+                    <CheckCircle2 size={64} strokeWidth={1.5} />
+                </motion.div>
+                <div className="space-y-3">
+                    <h2 className="text-4xl font-serif font-bold text-jungle dark:text-white">Creation Complete</h2>
+                    <p className="text-lg text-jungle/60 dark:text-lime/60 font-serif italic">
+                        Your knowledge deck is now ready for mastery.
                     </p>
                 </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto">
                 <button
                     onClick={handleDownload}
-                    className="w-full py-4 px-6 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-bold text-xl transition-all shadow-lg hover:shadow-green-500/50 flex items-center justify-center gap-3 transform hover:-translate-y-1"
+                    className="btn-primary w-full flex items-center justify-center gap-3 text-lg py-5"
                 >
-                    <Download size={24} />
-                    Download .apkg file
+                    <Download size={24} strokeWidth={1.5} />
+                    Download Deck
                 </button>
 
                 <button
                     onClick={onReset}
-                    className="w-full py-4 px-6 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-700 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                    className="btn-secondary w-full flex items-center justify-center gap-3 text-lg py-5"
                 >
-                    <RotateCcw size={20} />
-                    Start New Project
+                    <RotateCcw size={20} strokeWidth={1.5} />
+                    New Project
                 </button>
             </div>
 
-            <div className="p-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/30 text-left">
-                <h4 className="font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
-                    Next Steps:
+            <div className="p-8 bg-black/5 dark:bg-white/5 rounded-[2rem] border border-jungle/5 dark:border-lime/5 text-left max-w-lg mx-auto">
+                <h4 className="font-serif font-bold text-jungle dark:text-lime text-xl mb-4 flex items-center gap-3">
+                    Next Masteries:
                 </h4>
-                <ol className="text-sm text-indigo-800 dark:text-indigo-400 space-y-2 list-decimal list-inside">
-                    <li>Open Anki on your desktop.</li>
-                    <li>Click "Import File" from the main menu.</li>
-                    <li>Select the downloaded <b>.apkg</b> file.</li>
-                    <li>Start studying with your new AI-powered deck!</li>
+                <ol className="text-sm text-jungle/70 dark:text-lime/70 space-y-4 font-sans leading-relaxed">
+                    <li className="flex gap-4">
+                        <span className="flex-none w-6 h-6 rounded-full bg-lime/20 text-lime flex items-center justify-center font-bold text-xs">1</span>
+                        <span>Open <b>Anki</b> on your workstation.</span>
+                    </li>
+                    <li className="flex gap-4">
+                        <span className="flex-none w-6 h-6 rounded-full bg-lime/20 text-lime flex items-center justify-center font-bold text-xs">2</span>
+                        <span>Import the <b>.apkg</b> from your downloads.</span>
+                    </li>
+                    <li className="flex gap-4">
+                        <span className="flex-none w-6 h-6 rounded-full bg-lime/20 text-lime flex items-center justify-center font-bold text-xs">3</span>
+                        <span>Embark on your journey of deep understanding.</span>
+                    </li>
                 </ol>
             </div>
         </div>

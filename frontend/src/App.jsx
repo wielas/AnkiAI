@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { UploadSection } from './components/UploadSection'
 import { ProgressSection } from './components/ProgressSection'
 import { ResultsSection } from './components/ResultsSection'
@@ -100,52 +101,103 @@ function App() {
         setError(null)
     }
 
+    const pageVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.4, ease: "easeIn" } }
+    }
+
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4 md:p-8">
-            <div className="max-w-3xl mx-auto space-y-8">
-                <header className="text-center space-y-2">
-                    <h1 className="text-4xl font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400">
-                        AnkiAI
+        <div className="min-h-screen selection:bg-lime selection:text-jungle overflow-x-hidden">
+            {/* Background Decorative Elements */}
+            <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(199,239,78,0.1),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(0,51,16,0.05),transparent_40%)]" />
+
+            <div className="max-w-4xl mx-auto px-4 py-12 md:py-20 space-y-12">
+                <motion.header
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="text-center space-y-4"
+                >
+                    <h1 className="text-6xl md:text-7xl font-serif font-bold tracking-tight text-jungle dark:text-lime">
+                        Anki AI
                     </h1>
-                    <p className="text-lg text-gray-600 dark:text-gray-400">
-                        Transform your PDFs into high-quality Anki flashcards using AI.
+                    <p className="text-xl md:text-2xl text-jungle/60 dark:text-lime/60 font-serif italic">
+                        Synthesizing knowledge, swiftly.
                     </p>
-                </header>
+                </motion.header>
 
-                <main className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-10 transition-all duration-300">
-                    {error && <ErrorDisplay message={error} onClose={() => setError(null)} />}
+                <main className="relative">
+                    <AnimatePresence mode="wait">
+                        {error && (
+                            <motion.div
+                                key="error"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="mb-8"
+                            >
+                                <ErrorDisplay message={error} onClose={() => setError(null)} />
+                            </motion.div>
+                        )}
 
-                    {!generating && !completed && (
-                        <UploadSection
-                            selectedFile={selectedFile}
-                            onFileSelect={handleFileUpload}
-                            uploading={uploading}
-                            config={config}
-                            setConfig={setConfig}
-                            onStart={handleStartGeneration}
-                            disabled={!fileId || uploading}
-                        />
-                    )}
-
-                    {generating && (
-                        <ProgressSection
-                            progress={progress}
-                            statusMessage={statusMessage}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                        />
-                    )}
-
-                    {completed && (
-                        <ResultsSection
-                            jobId={jobId}
-                            onReset={handleReset}
-                        />
-                    )}
+                        {!generating && !completed ? (
+                            <motion.div
+                                key="upload"
+                                variants={pageVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                className="bg-white/40 dark:bg-jungle-light/20 backdrop-blur-xl rounded-[2rem] border border-jungle/5 dark:border-lime/10 shadow-2xl p-8 md:p-12"
+                            >
+                                <UploadSection
+                                    selectedFile={selectedFile}
+                                    onFileSelect={handleFileUpload}
+                                    uploading={uploading}
+                                    config={config}
+                                    setConfig={setConfig}
+                                    onStart={handleStartGeneration}
+                                    disabled={!fileId || uploading}
+                                />
+                            </motion.div>
+                        ) : generating ? (
+                            <motion.div
+                                key="progress"
+                                variants={pageVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                className="bg-white/40 dark:bg-jungle-light/20 backdrop-blur-xl rounded-[2rem] border border-jungle/5 dark:border-lime/10 shadow-2xl p-8 md:p-12"
+                            >
+                                <ProgressSection
+                                    progress={progress}
+                                    statusMessage={statusMessage}
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                />
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="results"
+                                variants={pageVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                className="bg-white/40 dark:bg-jungle-light/20 backdrop-blur-xl rounded-[2rem] border border-jungle/5 dark:border-lime/10 shadow-2xl p-8 md:p-12"
+                            >
+                                <ResultsSection
+                                    jobId={jobId}
+                                    onReset={handleReset}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </main>
 
-                <footer className="text-center text-sm text-gray-500 dark:text-gray-500">
-                    Built with React & FastAPI
+                <footer className="text-center">
+                    <p className="text-sm tracking-widest uppercase font-sans text-jungle/30 dark:text-lime/30">
+                        Generate Anki decks • Crafted for Mastery
+                    </p>
                 </footer>
             </div>
         </div>

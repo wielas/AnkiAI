@@ -1,55 +1,58 @@
 import { Settings2, Layers, Cpu } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export function ConfigForm({ config, setConfig, disabled }) {
     const handleChange = (field, value) => {
         setConfig(prev => ({ ...prev, [field]: value }))
     }
 
+    const inputClasses = "w-full p-4 rounded-2xl bg-white/50 dark:bg-jungle/30 border border-jungle/5 dark:border-lime/10 focus:border-lime focus:ring-4 focus:ring-lime/10 outline-none transition-all font-sans text-lg";
+
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-gray-50 dark:bg-gray-900/30 rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 bg-black/5 dark:bg-white/5 rounded-[2rem] border border-jungle/5 dark:border-lime/5">
             <div className="space-y-4">
-                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
-                    <Layers size={18} className="text-indigo-500" />
+                <label className="flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-jungle/60 dark:text-lime/60">
+                    <Layers size={18} className="text-lime" />
                     Page Range
                 </label>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                     <input
                         type="number"
                         min="1"
                         value={config.startPage}
                         onChange={(e) => handleChange('startPage', parseInt(e.target.value) || 1)}
                         disabled={disabled}
-                        className="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                        className={inputClasses}
                         placeholder="Start"
                     />
-                    <span className="text-gray-400">to</span>
+                    <span className="text-jungle/20 dark:text-lime/20 font-serif italic text-xl">to</span>
                     <input
                         type="number"
                         min="1"
                         value={config.endPage}
                         onChange={(e) => handleChange('endPage', parseInt(e.target.value) || 1)}
                         disabled={disabled}
-                        className="w-full p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                        className={inputClasses}
                         placeholder="End"
                     />
                 </div>
             </div>
 
             <div className="space-y-4">
-                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
-                    <Cpu size={18} className="text-indigo-500" />
-                    Difficulty Level
+                <label className="flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-jungle/60 dark:text-lime/60">
+                    <Cpu size={18} className="text-lime" />
+                    Mastery Depth
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                     {['beginner', 'intermediate', 'advanced'].map((level) => (
                         <button
                             key={level}
                             type="button"
                             onClick={() => handleChange('difficulty', level)}
                             disabled={disabled}
-                            className={`flex-1 py-3 px-2 rounded-xl text-xs font-bold capitalize transition-all ${config.difficulty === level
-                                    ? 'bg-indigo-600 text-white shadow-md'
-                                    : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:border-indigo-300'
+                            className={`flex-1 py-4 px-2 rounded-2xl text-xs font-bold tracking-widest uppercase transition-all duration-300 ${config.difficulty === level
+                                ? 'bg-jungle dark:bg-lime text-lime dark:text-jungle shadow-xl'
+                                : 'bg-white/50 dark:bg-jungle/30 text-jungle/40 dark:text-lime/40 border border-jungle/5 dark:border-lime/10 hover:border-lime/30'
                                 }`}
                         >
                             {level}
@@ -58,12 +61,12 @@ export function ConfigForm({ config, setConfig, disabled }) {
                 </div>
             </div>
 
-            <div className="space-y-4 md:col-span-2">
-                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300">
-                    <Settings2 size={18} className="text-indigo-500" />
-                    Cards Per Page
+            <div className="space-y-6 md:col-span-2">
+                <label className="flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-jungle/60 dark:text-lime/60">
+                    <Settings2 size={18} className="text-lime" />
+                    Knowledge Density
                 </label>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col gap-6">
                     <input
                         type="range"
                         min="1"
@@ -72,15 +75,22 @@ export function ConfigForm({ config, setConfig, disabled }) {
                         value={config.cardsPerPage}
                         onChange={(e) => handleChange('cardsPerPage', parseInt(e.target.value))}
                         disabled={disabled}
-                        className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                        className="w-full h-1.5 bg-jungle/10 dark:bg-lime/10 rounded-full appearance-none cursor-pointer accent-lime"
                     />
-                    <span className="w-10 h-10 flex items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-bold">
-                        {config.cardsPerPage}
-                    </span>
+                    <div className="flex justify-between items-center bg-white/50 dark:bg-jungle/30 p-6 rounded-2xl border border-jungle/5 dark:border-lime/10">
+                        <div className="space-y-1">
+                            <p className="font-serif font-medium text-lg">
+                                {config.cardsPerPage} Flashcard{config.cardsPerPage > 1 ? 's' : ''} / Page
+                            </p>
+                            <p className="text-xs text-jungle/40 dark:text-lime/40 font-sans">
+                                Optimized for high-retention learning.
+                            </p>
+                        </div>
+                        <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-lime text-jungle font-serif font-bold text-xl shadow-lg ring-4 ring-lime/20">
+                            {config.cardsPerPage}
+                        </div>
+                    </div>
                 </div>
-                <p className="text-xs text-gray-500 font-medium">
-                    How many unique flashcards to generate for each page of the PDF.
-                </p>
             </div>
         </div>
     )

@@ -27,7 +27,7 @@ AnkiAI transforms PDF documents into high-quality Anki flashcards using Claude A
 - **Context Building**: Token-aware assembly with metadata formatting
 
 ### Flashcard Generation
-- Claude Sonnet 4 for high-quality Q&A generation
+- Claude Sonnet 4 for high-quality Q&A generationX
 - Structured output with front/back/tags
 - Anki deck export (.apkg format)
 

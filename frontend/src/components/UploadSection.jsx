@@ -12,24 +12,25 @@ export function UploadSection({
     disabled
 }) {
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="space-y-10">
             {!selectedFile ? (
                 <FileDropzone onFileSelect={onFileSelect} uploading={uploading} />
             ) : (
-                <div className="space-y-6">
+                <div className="space-y-8">
                     <FilePreview file={selectedFile} onRemove={() => onFileSelect(null)} />
                     <ConfigForm config={config} setConfig={setConfig} disabled={uploading} />
 
                     <button
                         onClick={onStart}
                         disabled={disabled}
-                        className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all transform active:scale-95 shadow-lg ${disabled
-                                ? 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed shadow-none'
-                                : 'bg-indigo-600 hover:bg-indigo-700 text-white hover:shadow-indigo-500/50'
-                            }`}
+                        className="btn-primary w-full text-xl py-5"
                     >
-                        {uploading ? 'Uploading PDF...' : 'Generate Flashcards'}
+                        {uploading ? 'Preparing your session...' : 'Generate Flashcards'}
                     </button>
+
+                    <p className="text-center text-xs text-jungle/40 dark:text-lime/40 font-sans tracking-wide">
+                        Your document will be processed locally and securely.
+                    </p>
                 </div>
             )}
         </div>

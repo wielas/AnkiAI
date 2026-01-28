@@ -1,37 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  
+  --jungle: #003310;
+  --lime: #c7ef4e;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  @apply bg-white text-jungle dark:bg-jungle dark:text-lime-light selection:bg-lime selection:text-jungle;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: 'Lora', serif;
 }
 
 #root {
   width: 100%;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+.btn-primary {
+  @apply px-6 py-3 bg-lime text-jungle font-semibold rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-lime/20 disabled:opacity-50 disabled:hover:scale-100;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-transparent border-2 border-lime/30 text-lime-dark dark:text-lime font-semibold rounded-full transition-all duration-300 hover:border-lime active:scale-95 hover:bg-lime/5;
 }

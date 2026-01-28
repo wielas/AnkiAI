@@ -1,4 +1,5 @@
 import { FileText, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export function FilePreview({ file, onRemove }) {
     const formatSize = (bytes) => {
@@ -10,27 +11,31 @@ export function FilePreview({ file, onRemove }) {
     }
 
     return (
-        <div className="p-4 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl flex items-center justify-between group">
-            <div className="flex items-center gap-4">
-                <div className="p-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-xl">
-                    <FileText size={28} />
+        <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="p-6 bg-white/50 dark:bg-jungle/40 backdrop-blur-sm border border-jungle/5 dark:border-lime/10 rounded-[2rem] flex items-center justify-between group shadow-lg"
+        >
+            <div className="flex items-center gap-6">
+                <div className="p-4 bg-lime text-jungle rounded-2xl shadow-lime/20 shadow-xl">
+                    <FileText size={32} strokeWidth={1.5} />
                 </div>
                 <div>
-                    <p className="font-semibold truncate max-w-[200px] md:max-w-md">
+                    <p className="font-serif font-medium text-lg text-jungle dark:text-white truncate max-w-[200px] md:max-w-md">
                         {file.name}
                     </p>
-                    <p className="text-xs text-gray-500 font-medium">
+                    <p className="text-xs font-sans tracking-widest uppercase text-jungle/40 dark:text-lime/40 mt-1">
                         {formatSize(file.size)}
                     </p>
                 </div>
             </div>
             <button
                 onClick={onRemove}
-                className="p-2 hover:bg-white dark:hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-red-500"
+                className="p-3 bg-jungle/5 dark:bg-lime/5 hover:bg-red-500 hover:text-white rounded-2xl transition-all duration-300 text-jungle/30 dark:text-lime/30"
                 title="Remove file"
             >
-                <X size={20} />
+                <X size={20} strokeWidth={2.5} />
             </button>
-        </div>
+        </motion.div>
     )
 }
