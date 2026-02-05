@@ -1,10 +1,11 @@
 import { Download, CheckCircle2, RotateCcw } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { apiEndpoint } from '../config'
 
 export function ResultsSection({ jobId, onReset }) {
     const handleDownload = async () => {
         try {
-            const response = await fetch(`/api/download/${jobId}`)
+            const response = await fetch(apiEndpoint(`/api/download/${jobId}`))
             if (!response.ok) throw new Error('Download failed')
 
             const blob = await response.blob()

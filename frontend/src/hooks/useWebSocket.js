@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { wsEndpoint } from '../config'
 
 export function useWebSocket(jobId) {
     const [progress, setProgress] = useState(0)
@@ -18,7 +19,7 @@ export function useWebSocket(jobId) {
             return
         }
 
-        const wsUrl = `ws://localhost:8000/ws/progress/${jobId}`
+        const wsUrl = wsEndpoint(`/ws/progress/${jobId}`)
         console.log(`Connecting to WebSocket: ${wsUrl}`)
 
         ws.current = new WebSocket(wsUrl)

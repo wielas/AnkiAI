@@ -5,6 +5,7 @@ import { ProgressSection } from './components/ProgressSection'
 import { ResultsSection } from './components/ResultsSection'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { useWebSocket } from './hooks/useWebSocket'
+import { apiEndpoint } from './config'
 
 function App() {
     const [selectedFile, setSelectedFile] = useState(null)
@@ -41,7 +42,7 @@ function App() {
         formData.append('file', file)
 
         try {
-            const response = await fetch('/api/upload', {
+            const response = await fetch(apiEndpoint('/api/upload'), {
                 method: 'POST',
                 body: formData,
             })
@@ -64,7 +65,7 @@ function App() {
         setError(null)
 
         try {
-            const response = await fetch(`/api/generate/${fileId}`, {
+            const response = await fetch(apiEndpoint(`/api/generate/${fileId}`), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
