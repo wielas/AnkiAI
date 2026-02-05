@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AnkiAI is an AI-powered PDF to Anki flashcard generator built with a focus on learning RAG (Retrieval-Augmented Generation) architecture and system design. The system intelligently extracts document structure, builds semantic context through RAG, and generates high-quality flashcards using Claude/GPT-4.
+AnkiAI is an AI-powered PDF to Anki flashcard generator built with a focus on learning RAG (Retrieval-Augmented Generation) architecture and system design. The system intelligently extracts document structure, builds semantic context through RAG, and generates high-quality flashcards using Claude Sonnet 4.5.
 
 **Primary Learning Goals:**
 1. Master RAG & Embeddings (primary focus)

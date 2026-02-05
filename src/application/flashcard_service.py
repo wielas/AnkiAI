@@ -30,13 +30,13 @@ class RAGConfig:
     """Configuration for RAG-based flashcard generation.
 
     Attributes:
-        top_k: Number of chunks to retrieve for context (default: 5)
+        top_k: Number of chunks to retrieve for context (default: 3)
         chunk_target_size: Target token size for chunks (default: 800)
         chunk_overlap_size: Overlap between chunks in tokens (default: 100)
         include_metadata: Include source metadata in context (default: False)
     """
 
-    top_k: int = 5
+    top_k: int = 3
     chunk_target_size: int = 800
     chunk_overlap_size: int = 100
     include_metadata: bool = False

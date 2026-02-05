@@ -196,7 +196,7 @@ function App() {
 
                 <footer className="text-center">
                     <p className="text-sm tracking-widest uppercase font-sans text-jungle/30 dark:text-lime/30">
-                        Generate Anki decks • Crafted for Mastery
+                        ~ Learn Efficiently • Study Anki Decks ~
                     </p>
                 </footer>
             </div>

@@ -8,9 +8,6 @@ logger = logging.getLogger(__name__)
 class PromptBuilder:
     """Builds prompts for Claude to generate educational flashcards.
 
-    This is Version 1.0 - a simple template for Week 1. We'll iterate on this
-    in Weeks 2-3 based on quality analysis.
-
     Design decisions:
     - Stateless: All state passed via parameters
     - Few-shot learning: Includes 1-2 example flashcards

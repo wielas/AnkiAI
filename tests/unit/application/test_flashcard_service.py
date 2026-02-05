@@ -545,7 +545,7 @@ class TestRAGConfig:
         """Test RAGConfig has sensible defaults."""
         config = RAGConfig()
 
-        assert config.top_k == 5
+        assert config.top_k == 3
         assert config.chunk_target_size == 800
         assert config.chunk_overlap_size == 100
         assert config.include_metadata is False
