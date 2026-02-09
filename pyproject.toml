@@ -29,6 +29,7 @@ dependencies = [
 
 [tool.poetry]
 packages = [{include = "ankiai", from = "."}]
+authors = ["wielas <wiel4sso@gmail.com>"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
