@@ -1,7 +1,7 @@
 [project]
 name = "ankiai"
 version = "0.1.0"
-description = ""
+description = "AI-powered PDF to Anki flashcard generator"
 authors = [
     {name = "wielas",email = "wiel4sso@gmail.com"}
 ]
