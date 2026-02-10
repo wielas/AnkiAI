@@ -74,6 +74,9 @@ output/*.apkg
 # Claude
 .claude/
 
+# Data directory (uploads, outputs)
+data/
+
 # Test data
 flashcards.apkg
 tests/sample_data/*

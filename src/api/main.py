@@ -28,7 +28,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan handler for startup/shutdown tasks."""

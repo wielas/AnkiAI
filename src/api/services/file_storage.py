@@ -6,6 +6,7 @@ cloud storage (S3, R2, etc.) for persistence and scalability.
 """
 
 import logging
+import os
 import uuid
 from pathlib import Path
 from typing import Optional, Tuple
@@ -14,6 +15,8 @@ import aiofiles
 from fastapi import HTTPException, UploadFile
 
 logger = logging.getLogger(__name__)
+
+DATA_DIR = Path(os.getenv("DATA_DIR", "./data"))
 
 
 class FileStorage:
@@ -25,8 +28,8 @@ class FileStorage:
     - Single-instance only (no shared storage)
     """
 
-    UPLOAD_DIR = Path("./uploads")
-    OUTPUT_DIR = Path("./outputs")
+    UPLOAD_DIR = DATA_DIR / "uploads"
+    OUTPUT_DIR = DATA_DIR / "outputs"
     MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB
     ALLOWED_CONTENT_TYPES = {"application/pdf"}
 
